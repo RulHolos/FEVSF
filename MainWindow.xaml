@@ -5,95 +5,126 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FEVSF"
         mc:Ignorable="d"
-        Title="FEVSF" Height="450" Width="650" ResizeMode="CanMinimize" Icon="/Images/icon.png">
+        Title="FEVS"
+        Height="450"
+        Width="650"
+        ResizeMode="CanResize"
+        Icon="/Images/icon.png"
+        KeyDown="FEVS_KeyDown">
     <Window.Background>
         <ImageBrush ImageSource="/Images/butokaichitei1.png" />
     </Window.Background>
-    <Window.InputBindings>
-        <KeyBinding Command="ApplicationCommands.Open"
-              Gesture="CTRL+R" />
-    </Window.InputBindings>
+
     <Grid>
-        <TextBox Name="SourceCode"
-                 TextWrapping="Wrap"
-                 AcceptsReturn="True"
-                 VerticalScrollBarVisibility="Visible"
-                 RenderTransformOrigin="0.5,0.5"
-                 Margin="10,10,400,10"
-                 Foreground="White"
-                 Padding="5,5,5,5">
-            <TextBox.Background>
-                <SolidColorBrush Color="Black" Opacity="0.50" />
-            </TextBox.Background>
-        </TextBox>
-        <Button x:Name="Save"
-                HorizontalAlignment="Right"
-                Margin="0,10,325,0"
-                VerticalAlignment="Top"
-                Width="70"
-                Height="30"
-                Click="Save_Click"
-                Visibility="Visible"
-                Foreground="White"
-                BorderBrush="Transparent">
-            <Button.Background>
-                <SolidColorBrush Color="Black" Opacity="0.5" />
-            </Button.Background>
-            <TextBlock Text="Save .fevs" TextWrapping="Wrap" />
-        </Button>
-        <Button x:Name="Open"
-                HorizontalAlignment="Right"
-                Margin="0,10,209,0"
-                VerticalAlignment="Top"
-                Width="111"
-                Height="30"
-                Click="Open_Click"
-                Foreground="White"
-                BorderBrush="Transparent">
-            <Button.Background>
-                <SolidColorBrush Color="Black" Opacity="0.5" />
-            </Button.Background>
-            <TextBlock Text="Open .fevs file" TextWrapping="Wrap" />
-        </Button>
-        <Button x:Name="Transform"
-                HorizontalAlignment="Right"
-                Margin="0,10,10,0"
-                VerticalAlignment="Top"
-                Width="86"
-                Height="30"
-                Click="Transform_Click"
-                Foreground="White"
-                BorderBrush="Transparent">
-            <Button.Background>
-                <SolidColorBrush Color="Black" Opacity="0.5" />
-            </Button.Background>
-            <TextBlock Text="Save as .sevs" TextWrapping="Wrap" />
-        </Button>
-        <Button x:Name="New"
-                HorizontalAlignment="Right"
-                Margin="0,10,101,0"
-                VerticalAlignment="Top"
-                Width="103"
-                Height="30"
-                Click="New_Click"
-                Foreground="White"
-                BorderBrush="Transparent">
-            <Button.Background>
-                <SolidColorBrush Color="Black" Opacity="0.5" />
-            </Button.Background>
-            <TextBlock Text="New File" TextWrapping="Wrap" />
-        </Button>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48*"/>
+            <RowDefinition Height="373*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="79*"/>
+        </Grid.ColumnDefinitions>
+
         <TextBox Name="documentation"
-                 Text=""
                  TextWrapping="Wrap"
-                 Margin="255,108,10,10"
+                 Width="Auto"
+                 Height="Auto"
+                 Margin="10,10,10,10"
                  Padding="5,5,5,5"
                  VerticalScrollBarVisibility="Visible"
                  IsReadOnly="True"
-                 Foreground="White">
+                 Foreground="White"
+                 Grid.Column="2"
+                 Grid.Row="2"
+                 BorderBrush="Transparent">
             <TextBox.Background>
                 <SolidColorBrush Color="Black" Opacity="0.50" />
             </TextBox.Background>
         </TextBox>
+
+        <TextBox Name="SourceCode"
+                 TextWrapping="Wrap"
+                 Width="Auto"
+                 Height="Auto"
+                 Margin="10,10,10,10"
+                 Padding="5,5,5,5"
+                 VerticalScrollBarVisibility="Visible"
+                 IsReadOnly="True"
+                 Foreground="White"
+                 Grid.Column="0"
+                 Grid.Row="0"
+                 Grid.RowSpan="2"
+                 BorderBrush="Transparent">
+            <TextBox.Background>
+                <SolidColorBrush Color="Black" Opacity="0.50" />
+            </TextBox.Background>
+        </TextBox>
+
+        <Grid Grid.Column="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="Save"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Click="Save_Click"
+                    Visibility="Visible"
+                    Foreground="White"
+                    BorderBrush="Transparent"
+                    Grid.Column="0"
+                    Padding="5,5,5,5">
+                <Button.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5" />
+                </Button.Background>
+                <TextBlock Text="Save .fevs" TextWrapping="Wrap" />
+            </Button>
+
+            <Button x:Name="Open"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Click="Open_Click"
+                    Foreground="White"
+                    BorderBrush="Transparent"
+                    Grid.Column="1"
+                    Padding="5,5,5,5">
+                <Button.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5" />
+                </Button.Background>
+                <TextBlock Text="Open .fevs file" TextWrapping="Wrap" />
+            </Button>
+
+            <Button x:Name="New"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Click="New_Click"
+                    Foreground="White"
+                    BorderBrush="Transparent"
+                    Grid.Column="2"
+                    Padding="5,5,5,5">
+                <Button.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5" />
+                </Button.Background>
+                <TextBlock Text="New File" TextWrapping="Wrap" />
+            </Button>
+
+            <Button x:Name="Transform"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Click="Transform_Click"
+                    Foreground="White"
+                    BorderBrush="Transparent"
+                    Grid.Column="3"
+                    Padding="5,5,5,5">
+                <Button.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5" />
+                </Button.Background>
+                <TextBlock Text="Save as .sevs" TextWrapping="Wrap" />
+            </Button>
+        </Grid>
     </Grid>
 </Window>

@@ -14,6 +14,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.ComponentModel;
+using System.Configuration;
+using System.Collections.Specialized;
+using FEVSF.Properties;
 
 namespace FEVSF
 {
@@ -25,13 +29,11 @@ namespace FEVSF
             documentation.Text = File.ReadAllText(@"documentation.txt");
         }
 
-        /*private void FEVS_KeyDown(object sender, KeyEventArgs e)
+        private void FEVS_KeyDown(object sender, KeyEventArgs e)
         {
-            if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.S)
-            {
-                MessageBox.Show("CTRL + S");
-            }
-        }*/
+            if (e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control)
+                CtrlSave();
+        }
 
         private void Open_Click(object sender, RoutedEventArgs e)
         {
@@ -48,6 +50,8 @@ namespace FEVSF
                 Title = "FEVS - " + filename;
                 string text = File.ReadAllText(filename);
                 SourceCode.Text = text;
+                SourceCode.IsReadOnly = false;
+                CheckSave();
             }
         }
 
@@ -67,6 +71,7 @@ namespace FEVSF
                         sw.Write(lines[i]);
                     }
                 }
+                CheckSave();
             }
             else
             {
@@ -176,6 +181,65 @@ namespace FEVSF
                 Title = "FEVS - " + filename;
                 string text = File.ReadAllText(filename);
                 SourceCode.Text = text;
+                SourceCode.IsReadOnly = false;
+            }
+        }
+
+        private void CtrlSave()
+        {
+            string[] filename = Title.Split(new[] { " - " }, StringSplitOptions.None);
+            if (filename.Length == 2)
+            {
+                string content = SourceCode.Text;
+                string[] lines = content.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                using (StreamWriter sw = new StreamWriter(filename[1]))
+                {
+                    for (int i = 0; i < lines.Length; i++)
+                    {
+                        if (i > 0)
+                            sw.WriteLine();
+                        sw.Write(lines[i]);
+                    }
+                }
+                CheckSave();
+            }
+            else
+            {
+                MessageBox.Show("You don't have any loaded file to save.");
+            }
+        }
+
+        // Appelé par le KeyUp de SourceCode
+        private void CheckSave(object sender, KeyEventArgs e)
+        {
+            string[] filename = Title.Split(new[] { " - " }, StringSplitOptions.None);
+            if (filename.Length != 2)
+                return;
+            string text = File.ReadAllText(filename[1]);
+            if (text != SourceCode.Text)
+            {
+                Title = "*FEVS - " + filename[1];
+            }
+            else
+            {
+                Title = "FEVS - " + filename[1];
+            }
+        }
+
+        // Surchage appelée par Save
+        private void CheckSave()
+        {
+            string[] filename = Title.Split(new[] { " - " }, StringSplitOptions.None);
+            if (filename.Length != 2)
+                return;
+            string text = File.ReadAllText(filename[1]);
+            if (text != SourceCode.Text)
+            {
+                Title = "*FEVS - " + filename[1];
+            }
+            else
+            {
+                Title = "FEVS - " + filename[1];
             }
         }
     }
