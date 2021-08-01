@@ -1,0 +1,326 @@
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+Documentation for
+     FEVS - Scripting helper for .evs
+			    By Atae Kurri
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+=========
+Example :
+=========
+
+File : "example.fevs"
+emoteP(1, EXCLAMATION)
+moveE(WALK, 1, 2, 5)
+txt(9814, False, 0)
+moveP(WALK, 3, 1)
+moveE(WALK, 3, 1, 892)
+EDObject(0, 892, True)
+turnP(LEFT, 1)
+moveE(WALK, 1, 2, 5)
+EDObject(0, 5, False)
+EDObject(0, 0, False)
+EDObject(507, 1, True)
+
+===========
+Functions :
+===========
+
+!!! EVERY VALUE IS IN DECIMAL, NOT HEXADECIMAL !!!
+- ! A (Context) after a function name means that it
+must be used after or before another function, read
+its description carefully ! -
+
+	all(arguments)
+	---------------
+Used to implement any functions that are not in this program.
+Example :
+all(10, 0, 0, 255, 10) -> Shader
+all(0) -> Stop the current event.
+You can use the latter to make an event do something with a checkFlag()
+or something else.
+exemple : checkFlag(4000, 3)
+	  turnP(UP, 1)
+	  all(0)
+	  turnP(DOWN, 1)
+So that only one of those turnP will fire
+
+	turnP(direction, nbr)
+	---------------------
+Will turn the player's view
+direction  : UP, DOWN, RIGHT, LEFT
+nbr        : The number of times the player turns
+
+	emoteP(nbr, bubble)
+	-------------------
+Will display an emote on the player's sprite
+nbr    : The number of times the player turns
+bubble : EXCLAMATION, QUESTION, SMILE, SWEAT, IDEA, MUSIC, HEART, BLUSH, SLEEP, THINK, CONFUSED, ANGER
+
+	jumpP(nbr)
+	----------
+With this, you can make the player jump in place.
+Nbr : The number of times the player jumps.
+
+	moveP(mode, direction, distance)
+	--------------------------------
+The player will move.
+mode       : WALK, RUN, BACKWARD
+direction  : UP, DOWN, RIGHT, LEFT
+distance   : int
+
+	turnE, emoteE, jumpE, moveE
+	---------------------------
+Same as the player, but the last argument is the object ID.
+
+	camera(direction, distance)
+	---------------------------
+The camera will move in the given direction
+direction : UP, DOWN, RIGHT, LEFT
+distance  : int
+
+	warp(mapID, objectID, direction)
+	--------------------------------
+The player will be warped on the given map at an object location,
+facing a given direction.
+mapID     : See your maps
+objectID  : See your maps
+direction : UP, DOWN, RIGHT, LEFT
+
+	txt(ID, choice, jump)
+	---------------------
+A text file will be loaded and read.
+ID     : The ID of the text file (ex: 9813)
+choice : True, False
+jump   : if choice = True and the choice is answered "yes", then
+this will jump to the Xth chunk of bytes.
+
+	setFlag(flag, IO)
+	-----------------
+Will set a given flag to the IO value.
+flag : int
+IO   : True, False
+
+	loadEvent(flag, ID)
+	-------------------
+Stops the current event and loads another one.
+flag : If the flag is not activate, it will not load the event.
+ID   : An event ID
+
+	EDObject(mapID, objectID, IO)
+	----------------------------
+Activate or Deactivate a given object on a given map.
+mapID    : The map on which is located the object (can be 0, it will be
+on the same map)
+objectID : The object ID (can be 0, it will be the same object on
+another map)
+IO       : True, False
+
+	checkFlag(flag, jump)
+	---------------------
+Will check if a flag is enabled, if so, it will jump to the Xth chunk
+of bytes.
+flag : int
+jump : int
+
+	battle(puppetID, style, level)
+	------------------------------
+Will start a battle against a wild puppet.
+puppetID : The ID of the puppet
+style    : 1, 2, 3, 4 depending on the puppet
+level    : int
+
+	trainer(trainerID)
+	------------------
+Will start a battle against a trainer
+trainerID : See the "Trainers" tab on the modding tool.
+
+	eTrainer(trainerID)
+	-------------------
+Re-enables an already fought trainer.
+trainerID : See the "Trainers" tab on the modding tool.
+
+	name(IO) (Context)
+	--------
+Edit the name of the player or a puppet (see choosePuppet)
+IO : False to edit the player's name, True for a puppet
+
+	gender()
+	--------
+Edit the gender of the player
+
+	choosePuppet(arg1) (Context)
+	------------------
+Choose a puppet and loads it into the memory to be used by the SAME
+event. You can use this before a name() or a release().
+Maybe something else using all().
+arg1 : Idk what it does, leave it as zero or experiment if you want.
+
+	givePuppet(puppetID, style, level, nbr)
+	---------------------------------------
+Gives a puppet to the player, in the party or boxes, I didn't tested
+this one out.
+puppetID : The ID of the puppet to give to the player
+style    : Same as battle()
+level    : int
+nbr      : How many of the same puppet to give to the player (maybe)
+
+	giveItem(itemID, nbr)
+	---------------------
+Give a given item nbr times to the player.
+itemID : The ID of the item to give to the player
+nbr    : How many times to give the item.
+
+	removeItem(itemID, nbr)
+	-----------------------
+Remove a given item nbr times from the player.
+itemID : The ID of the item to remove from the player
+nbr    : How many times to remove the item.
+
+	testItem(itemID, nbr, jump)
+	---------------------------
+Test if the player has a given item in their inventory
+itemID : The ID of the item to test
+nbr    : How many items does the player needs
+jump   : If successful, jump to the Xth chunk of bytes.
+
+	music(musicID)
+	--------------
+Change the music.
+musicID : ID of the new music.
+
+	se(seID)
+	--------
+Play a sound effect
+seID : SE from gn_dat3.arc (look into the SeData.csv file)
+
+	box()
+	-----
+Open the puppet box.
+
+	shop(shopID)
+	------------
+Allows you to open a shop (handled by files
+in gn_dat5.arc\script\shop\)
+shopID : The n° of the shop to open.
+
+	heal(mode)
+	----------
+Heals the player's team
+mode : False will only heal the team, True will play the jingle and
+wait a bit longer. (Usualy the maids in healing houses)
+
+	testBook(nbr, jump)
+	-------------------
+Check if the player has catched a given number of puppets
+nbr  : How many puppets the player has to catch.
+jump : If successful, jump to the Xth chunk of bytes.
+
+	warpNPC(eventID, x, y)
+	----------------------
+Will warp an NPC on the same map
+eventID : The object to move
+x       : The horizontal position
+y       : The vertical position
+
+	fullTxt(txtID, arg2)
+	--------------------
+Will display a text file in fullscreen (best used with all()
+used as shaders)
+txtID : Same as txt()
+arg2  : Idk what id does, leave it as 6 or experiment if you want.
+
+	pvp()
+	-----
+Opens the PVP hub
+
+	releasePuppet() (Context)
+	---------------
+Used after choosePuppet().
+Will release a puppet into the nature. (Like what Hina does)
+!! There is no way to undo that !!
+
+	displayMoney()
+	--------------
+Will display the money the player has
+Using it again will disable the display.
+
+	testMoney(nbr, jump)
+	--------------------
+If the player has enough money, jump to the Xth chunk of bytes.
+nbr  : Amount of money needed
+jump : int
+
+	removeMoney(nbr)
+	----------------
+Removes nbr amount of money from the player's purse
+nbr : Amount of money to remove.
+
+	listGet(txtID, listID)
+	----------------------
+Allows you to call a list, located in gn_dat5.arc\script\list\.
+These lists are used for basically any choice that isn't "yes/no",
+such as Kozusu asking you which book you want to read.
+txtID  : The id of the txt that plays befoe the choice
+listID : The id of the list.
+
+	lockPuppetMov(IO)
+	-----------------
+Locks the movements of the puppet that follow the player
+IO : True Locks, False Unlocks
+
+	steps(nbr, eventID)
+	-------------------
+Allows you to make an event happen in a certain amount of steps.
+Think TPDP lunar capital or Pokemon safari zone. 
+Nbr     : The number of steps until activation.
+eventID : The event loaded at the end of the steps.
+
+	cSteps()
+	--------
+Cancels steps()
+
+	weather(mapID, weatherID)
+	-------------------------
+Changes the weather on a given mapID.
+mapID     : The map to affect
+weatherID : NONE, DARKNESS, FOG, REDFOG, SNOW, CHERRY, HEAT, SPIRITS, ORBS, RAIN
+
+	getWinStreakTournament()
+	------------------------
+Get win streak tournament (usable by \t in the dialogs)
+
+	autoSave(arg1)
+	--------------
+Saves the game without asking for confirmation.
+arg1 : Idk, leave it as 0 or experiment if you want to.
+
+	noWaitMoveP(movementMode, direction, distance)
+	----------------------------------------------
+Same as moveP.
+Doesn't wait until the movement is finished to continue the
+event
+
+	noWaitMoveE(movementMode, direction, distance, eventID)
+	-------------------------------------------------------
+Same as moveE.
+Doesn't wait until the movement is finished to continue the
+event
+
+	noWaitCamera(direction, distance)
+	---------------------------------
+Same as camera.
+Doesn't wait until the movement is finished to continue the
+event
+
+	noWaitWarp(mapID, eventID, direction)
+	-------------------------------------
+Same as warp.
+Doesn't wait until the movement is finished to continue the
+event
+
+	txt2(ID, choice, jump)
+	----------------------
+Same as txt.
+I don't know what it's used for. It doesn't seem to behave like
+other noWait--- commands but it's right after in the code.
+I guess we'll have to dig deeper for this one?
