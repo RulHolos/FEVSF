@@ -8,6 +8,17 @@ Documentation for
 .sevs = Text-like code (to be put in the in-editor event editor)
 .evs = Byte file, can be directly read by TPDP
 
+============
+Instructions
+============
+
+To start using this software, you can do two things :
+1. Creating new files using the "New File" Button on the main window.
+2. Loading all events and/or transform them into pseudo-code (fevs) files.
+
+Note that you must provide a base directory containing all the folders with files in them.
+Or else, nothing will work, since the directory tree is not in the right format.
+
 =========
 Example :
 =========

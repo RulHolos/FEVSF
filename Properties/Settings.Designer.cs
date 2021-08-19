@@ -46,5 +46,17 @@ namespace FEVSF.Properties {
                 this["LocalPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string WorkMode {
+            get {
+                return ((string)(this["WorkMode"]));
+            }
+            set {
+                this["WorkMode"] = value;
+            }
+        }
     }
 }

@@ -52,8 +52,13 @@ namespace FEVSF
                 Title = "FEVS - " + filename;
                 string text = File.ReadAllText(filename);
                 SourceCode.Text = text;
-                SourceCode.IsReadOnly = false;
                 CheckSave();
+            }
+            else
+            {
+                CtrlSave();
+                Title = "FEVS";
+                SourceCode.Text = "";
             }
         }
 

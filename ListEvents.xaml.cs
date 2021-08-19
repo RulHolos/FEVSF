@@ -42,6 +42,8 @@ namespace FEVSF
                 string WorkingDirPath = Properties.Settings.Default.WorkingDirPath + "\\gn_dat5.arc\\script\\event";
                 List<string> dirs = new List<string>(Directory.EnumerateDirectories(WorkingDirPath));
 
+                events_view.Items.Clear();
+
                 // Permet de remplir le TreeView (events_view)
                 foreach (var dir in dirs)
                 {
@@ -64,6 +66,8 @@ namespace FEVSF
                         treeNode.Items.Add(childNode);
                     }
                 }
+                Properties.Settings.Default.WorkMode = "global";
+                Properties.Settings.Default.Save();
             }
             catch (UnauthorizedAccessException ex) { MessageBox.Show(ex.Message); }
             catch (PathTooLongException ex) { MessageBox.Show(ex.Message); }
@@ -71,32 +75,52 @@ namespace FEVSF
 
         private void itemDoubleClicked(object sender, RoutedEventArgs e)
         {
-            TreeViewItem selectedTVI = (TreeViewItem)events_view.SelectedItem;
-            string selected = selectedTVI.Header.ToString();
-            if (selected.Length > 3)
+            try
             {
-                TreeViewItem parentI = (TreeViewItem)selectedTVI.Parent;
-                string parent = parentI.Header.ToString();
-                string FilePath = Properties.Settings.Default.WorkingDirPath
-                    + "\\gn_dat5.arc\\script\\event\\"
-                    + parent
-                    + "\\"
-                    + selected;
-
-                // Get Window Title
-                var mainWin = Application.Current.Windows.Cast<Window>().FirstOrDefault(window => window is MainWindow) as MainWindow;
-                string title = mainWin.Title;
-                string[] filename = title.Split(new[] { " - " }, StringSplitOptions.None);
-                bool confirmation = true;
-                if (filename.Length == 2)
-                    confirmation = UnloadFile(true);
-                if (confirmation)
+                TreeViewItem selectedTVI = (TreeViewItem)events_view.SelectedItem;
+                string selected = selectedTVI.Header.ToString();
+                if (selected.Length > 3)
                 {
-                    if (!selected.EndsWith(".evs"))
-                    {
+                    TreeViewItem parentI = (TreeViewItem)selectedTVI.Parent;
+                    string parent = parentI.Header.ToString();
+                    string FilePath = Properties.Settings.Default.WorkingDirPath
+                        + "\\gn_dat5.arc\\script\\event\\"
+                        + parent
+                        + "\\"
+                        + selected;
 
+                    // Get Window Title
+                    var mainWin = Application.Current.Windows.Cast<Window>().FirstOrDefault(window => window is MainWindow) as MainWindow;
+                    string title = mainWin.Title;
+                    string[] filename = title.Split(new[] { " - " }, StringSplitOptions.None);
+                    bool confirmation = true;
+                    if (filename.Length == 2)
+                        confirmation = UnloadFile(true);
+                    if (confirmation)
+                    {
+                        if (Properties.Settings.Default.WorkMode == "global")
+                        {
+
+                        }
+                        else
+                        {
+                            string[] newselected = selected.Split('.');
+                            string newpath = Properties.Settings.Default.LocalPath
+                                            + "\\"
+                                            + parent
+                                            + "\\"
+                                            + newselected[0] + ".fevs";
+                            mainWin.Title = "FEVS - " + newpath;
+                            string text = File.ReadAllText(newpath);
+                            mainWin.SourceCode.Text = text;
+                            mainWin.SourceCode.IsReadOnly = false;
+                        }
                     }
                 }
+            }
+            catch
+            {
+                MessageBox.Show("Something went wrong, aborting.");
             }
         }
 
@@ -238,13 +262,62 @@ namespace FEVSF
                         HandleEVSFile(fileName, localPath);
                     }
                 }
+                Properties.Settings.Default.WorkMode = "local";
+                Properties.Settings.Default.Save();
+                foreach (TreeViewItem oSubNode in events_view.Items)
+                {
+                    foreach (TreeViewItem childNode in oSubNode.Items)
+                    {
+                        string[] head = childNode.Header.ToString().Split('.');
+                        childNode.Header = head[0] + ".fevs";
+                    }
+                }
                 MessageBox.Show("Done");
             }
         }
 
         private void LoadFEVS_Click(object sender, RoutedEventArgs e)
         {
-            
+            System.Windows.Forms.FolderBrowserDialog browse = new System.Windows.Forms.FolderBrowserDialog();
+            browse.Description = "Choose where to load .fevs files from";
+            browse.ShowDialog();
+
+            if (browse.SelectedPath == "")
+                MessageBox.Show("No folden choosen, aborting.");
+            else
+            {
+                Properties.Settings.Default.LocalPath = browse.SelectedPath;
+                Properties.Settings.Default.Save();
+
+                events_view.Items.Clear();
+
+                List<string> dirs = new List<string>(Directory.EnumerateDirectories(Properties.Settings.Default.LocalPath));
+
+                // Permet de remplir le TreeView (events_view)
+                foreach (var dir in dirs)
+                {
+                    string directory = dir.Substring(dir.LastIndexOf(System.IO.Path.DirectorySeparatorChar) + 1);
+                    TreeViewItem treeNode = new TreeViewItem();
+                    treeNode.Header = directory;
+                    treeNode.Foreground = (Brush)new BrushConverter().ConvertFrom("#FFFFFF");
+                    events_view.Items.Add(treeNode);
+
+                    string direc = Properties.Settings.Default.LocalPath + "\\" + directory;
+                    DirectoryInfo di = new DirectoryInfo(direc);
+                    FileInfo[] files = di.GetFiles("*.fevs");
+
+                    // Permet de remplir le TreeView avec les childs des nodes (events_view)
+                    foreach (var file in files)
+                    {
+                        TreeViewItem childNode = new TreeViewItem();
+                        childNode.Header = file.Name;
+                        childNode.Foreground = (Brush)new BrushConverter().ConvertFrom("#FFFFFF");
+                        treeNode.Items.Add(childNode);
+                    }
+                }
+                Properties.Settings.Default.WorkMode = "local";
+                Properties.Settings.Default.Save();
+            }
         }
 
         private void ChangeLocalPath_Click(object sender, RoutedEventArgs e)
