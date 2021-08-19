@@ -8,7 +8,7 @@
         Title="FEVS"
         Height="450"
         Width="650"
-        ResizeMode="CanResize"
+        ResizeMode="CanResizeWithGrip"
         Icon="/Images/icon.png"
         KeyDown="FEVS_KeyDown">
     <Window.Background>
@@ -50,12 +50,13 @@
                  Margin="10,10,10,10"
                  Padding="5,5,5,5"
                  VerticalScrollBarVisibility="Visible"
-                 IsReadOnly="True"
                  Foreground="White"
                  Grid.Column="0"
                  Grid.Row="0"
                  Grid.RowSpan="2"
-                 BorderBrush="Transparent">
+                 BorderBrush="Transparent"
+                 KeyUp="CheckSave"
+                 AcceptsReturn="True">
             <TextBox.Background>
                 <SolidColorBrush Color="Black" Opacity="0.50" />
             </TextBox.Background>

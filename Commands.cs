@@ -50,13 +50,26 @@ namespace FEVSF
             RAIN = 9
         }
 
-        public static int[] all(string[] args)
+        public static int[] all(string arg0, string arg1, string arg2, string arg3, string arg4, string arg5, string arg6,
+            string arg7, string arg8, string arg9)
         {
             int[] command = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            for (int i = 0; i < args.Length; i++)
-            {
-                command[i] = int.Parse(args[i]);
-            }
+            command[0] = int.Parse(arg0);
+            command[1] = int.Parse(arg1);
+            command[2] = int.Parse(arg2);
+            command[3] = int.Parse(arg3);
+            command[4] = int.Parse(arg4);
+            command[5] = int.Parse(arg5);
+            command[6] = int.Parse(arg6);
+            command[7] = int.Parse(arg7);
+            command[8] = int.Parse(arg8);
+            command[9] = int.Parse(arg9);
+            return command;
+        }
+
+        public static int[] stop(string argVide)
+        {
+            int[] command = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             return command;
         }
 
@@ -217,6 +230,26 @@ namespace FEVSF
             return command;
         }
 
+        public static int[] shaderA(string color, string opacity, string time)
+        {
+            int[] command = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            command[0] = 10; // 1
+            command[1] = int.Parse(color); // 3
+            command[2] = int.Parse(opacity); // 5
+            command[3] = int.Parse(time); // 7
+            return command;
+        }
+
+        public static int[] shaderB(string image, string time, string opacity)
+        {
+            int[] command = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            command[0] = 11; // 1
+            command[1] = int.Parse(image); // 3
+            command[2] = int.Parse(time); // 5
+            command[3] = int.Parse(opacity); // 7
+            return command;
+        }
+
         public static int[] battle(string puppetID, string style, string level)
         {
             int[] command = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -255,7 +288,7 @@ namespace FEVSF
             return command;
         }
 
-        public static int[] gender()
+        public static int[] gender(string argVide)
         {
             int[] command = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             command[0] = 17; // 1
@@ -327,7 +360,7 @@ namespace FEVSF
             return command;
         }
 
-        public static int[] box()
+        public static int[] box(string argVide)
         {
             int[] command = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             command[0] = 25; // 1
@@ -346,7 +379,7 @@ namespace FEVSF
         {
             int[] command = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             command[0] = 29; // 1
-            command[1] = Convert.ToInt32(bool.Parse(mode)); // 3
+            command[1] = Convert.ToInt32(bool.Parse(mode) ? 2 : 1); // 3
             return command;
         }
 
@@ -370,7 +403,7 @@ namespace FEVSF
             return command;
         }
 
-        public static int[] gender(string txtID, string arg2)
+        public static int[] fullTxt(string txtID, string arg2)
         {
             int[] command = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             command[0] = 33; // 1
@@ -379,21 +412,21 @@ namespace FEVSF
             return command;
         }
 
-        public static int[] pvp()
+        public static int[] pvp(string argVide)
         {
             int[] command = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             command[0] = 34; // 1
             return command;
         }
 
-        public static int[] releasePuppet()
+        public static int[] releasePuppet(string argVide)
         {
             int[] command = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             command[0] = 41; // 1
             return command;
         }
 
-        public static int[] displayMoney()
+        public static int[] displayMoney(string argVide)
         {
             int[] command = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             command[0] = 43; // 1
@@ -444,7 +477,7 @@ namespace FEVSF
             return command;
         }
 
-        public static int[] cSteps()
+        public static int[] cSteps(string argVide)
         {
             int[] command = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             command[0] = 51; // 1
@@ -461,7 +494,7 @@ namespace FEVSF
             return command;
         }
 
-        public static int[] getWinStreakTournament()
+        public static int[] getWinStreakTournament(string argVide)
         {
             int[] command = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             command[0] = 63; // 1

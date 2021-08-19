@@ -4,6 +4,10 @@ Documentation for
 			    By Atae Kurri
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
+.fevs = Pseudo-code files
+.sevs = Text-like code (to be put in the in-editor event editor)
+.evs = Byte file, can be directly read by TPDP
+
 =========
 Example :
 =========
@@ -30,19 +34,15 @@ Functions :
 must be used after or before another function, read
 its description carefully ! -
 
+	stop()
+	------
+Stops the current event.
+It's also for everytime to first byte is 0.
+
 	all(arguments)
-	---------------
-Used to implement any functions that are not in this program.
-Example :
-all(10, 0, 0, 255, 10) -> Shader
-all(0) -> Stop the current event.
-You can use the latter to make an event do something with a checkFlag()
-or something else.
-exemple : checkFlag(4000, 3)
-	  turnP(UP, 1)
-	  all(0)
-	  turnP(DOWN, 1)
-So that only one of those turnP will fire
+	--------------
+Used for everything not implemented.
+Arguments count MUST be 10.
 
 	turnP(direction, nbr)
 	---------------------
@@ -122,6 +122,20 @@ of bytes.
 flag : int
 jump : int
 
+	shaderA(color, opacity, time)
+	-----------------------------
+Will show a color in the whole screen
+color   : 0 Black, 1 White, 2 White but with a twist (Idk)
+opacity : 0 to 255
+time    : How much time the color will take to appear or disappear
+
+	shaderB(image, time, opacity)
+	-----------------------------
+Will show a color in the whole screen
+image   : /gn_dat5.arc/graph image id
+time    : How much time the color will take to appear or disappear
+opacity : 0 to 255
+
 	battle(puppetID, style, level)
 	------------------------------
 Will start a battle against a wild puppet.
@@ -152,7 +166,6 @@ Edit the gender of the player
 	------------------
 Choose a puppet and loads it into the memory to be used by the SAME
 event. You can use this before a name() or a release().
-Maybe something else using all().
 arg1 : Idk what it does, leave it as zero or experiment if you want.
 
 	givePuppet(puppetID, style, level, nbr)
@@ -224,8 +237,7 @@ y       : The vertical position
 
 	fullTxt(txtID, arg2)
 	--------------------
-Will display a text file in fullscreen (best used with all()
-used as shaders)
+Will display a text file in fullscreen (best used with shaders)
 txtID : Same as txt()
 arg2  : Idk what id does, leave it as 6 or experiment if you want.
 

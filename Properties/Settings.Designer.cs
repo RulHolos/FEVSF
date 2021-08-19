@@ -25,13 +25,25 @@ namespace FEVSF.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public double MainWindowPos {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string WorkingDirPath {
             get {
-                return ((double)(this["MainWindowPos"]));
+                return ((string)(this["WorkingDirPath"]));
             }
             set {
-                this["MainWindowPos"] = value;
+                this["WorkingDirPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LocalPath {
+            get {
+                return ((string)(this["LocalPath"]));
+            }
+            set {
+                this["LocalPath"] = value;
             }
         }
     }

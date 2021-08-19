@@ -26,7 +26,9 @@ namespace FEVSF
         public MainWindow()
         {
             InitializeComponent();
-            documentation.Text = File.ReadAllText(@"documentation.txt");
+            documentation.Text = File.ReadAllText("documentation.txt");
+            ListEvents subWindow = new ListEvents();
+            subWindow.Show();
         }
 
         private void FEVS_KeyDown(object sender, KeyEventArgs e)
@@ -95,6 +97,7 @@ namespace FEVSF
                     MessageBox.Show("Too many lines to encode.");
                 else
                 {
+                    bool error = false;
                     for (int q = 0; q < finishedCommands.Length; q++)
                     {
                         finishedCommands[q] = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -130,35 +133,49 @@ namespace FEVSF
                         try
                         {
                             // Si les args et la commande sont bons, alors on va l'appeler et modifier le finishedCommands[i]
-                            int[] commandResult = (int[])magicMethod.Invoke(CommandsObject, args);
-                            finishedCommands[i] = commandResult;
+                            for (int a = 0; a < args.Length; a++)
+                            {
+                                Console.Write(args[a].ToString());
+                            }
+                            Console.Write("\n");
+                            finishedCommands[i] = (int[])magicMethod.Invoke(CommandsObject, args);
                         }
                         catch (NullReferenceException)
                         {
+                            error = true;
                             MessageBox.Show("Something went wrong : Check your commands names.\nSome bytes were set to 0 because of\nthis error to avoid crashing.");
                         }
                         catch (TargetInvocationException)
                         {
+                            error = true;
                             MessageBox.Show("Something went wrong : One or multiple arguments are not valid.\nSome bytes were set to 0 because of\nthis error to avoid crashing.");
                         }
-                    }
-                    string[] filename1 = Title.Split(new[] { " - " }, StringSplitOptions.None);
-                    string[] file = filename1[1].Split('.');
-                    using (StreamWriter sw = new StreamWriter(file[0] + ".sevs"))
-                    {
-                        for (int i = 0; i < finishedCommands.Length; i++)
+                        catch (TargetParameterCountException)
                         {
-                            if (i > 0)
-                                sw.WriteLine();
-                            for (int j = 0; j < finishedCommands[i].Length; j++)
-                            {
-                                if (j > 0)
-                                    sw.Write(", ");
-                                sw.Write(Convert.ToString(finishedCommands[i][j], 16).ToUpper());
-                            }
+                            error = true;
+                            MessageBox.Show("Something went wrong : Check the number of arguments of one or more of your commands.");
                         }
                     }
-                    MessageBox.Show("Done.");
+                    if (!error)
+                    {
+                        string[] filename1 = Title.Split(new[] { " - " }, StringSplitOptions.None);
+                        string[] file = filename1[1].Split('.');
+                        using (StreamWriter sw = new StreamWriter(file[0] + ".sevs"))
+                        {
+                            for (int i = 0; i < finishedCommands.Length; i++)
+                            {
+                                if (i > 0)
+                                    sw.WriteLine();
+                                for (int j = 0; j < finishedCommands[i].Length; j++)
+                                {
+                                    if (j > 0)
+                                        sw.Write(", ");
+                                    sw.Write(Convert.ToString(finishedCommands[i][j], 16).ToUpper());
+                                }
+                            }
+                        }
+                        MessageBox.Show("Done.");
+                    }
                 }
             }
         }
