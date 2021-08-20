@@ -21,6 +21,13 @@ namespace FEVSF
         {
             InitializeComponent();
             workingdirpath.Text = Properties.Settings.Default.WorkingDirPath;
+
+            this.Closed += new EventHandler(ListEvents_Closed);
+        }
+
+        void ListEvents_Closed(object sender, EventArgs e)
+        {
+            App.Current.Shutdown();
         }
 
         private void workingdirpath_KeyUp(object sender, KeyEventArgs e)
@@ -71,6 +78,7 @@ namespace FEVSF
             }
             catch (UnauthorizedAccessException ex) { MessageBox.Show(ex.Message); }
             catch (PathTooLongException ex) { MessageBox.Show(ex.Message); }
+            catch (DirectoryNotFoundException ex) { MessageBox.Show("No working directory in the provided path, aborting."); }
         }
 
         private void itemDoubleClicked(object sender, RoutedEventArgs e)
