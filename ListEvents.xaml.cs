@@ -78,7 +78,7 @@ namespace FEVSF
             }
             catch (UnauthorizedAccessException ex) { MessageBox.Show(ex.Message); }
             catch (PathTooLongException ex) { MessageBox.Show(ex.Message); }
-            catch (DirectoryNotFoundException ex) { MessageBox.Show("No working directory in the provided path, aborting."); }
+            catch (DirectoryNotFoundException) { MessageBox.Show("No working directory in the provided path, aborting."); }
         }
 
         private void itemDoubleClicked(object sender, RoutedEventArgs e)

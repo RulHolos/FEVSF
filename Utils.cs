@@ -226,6 +226,37 @@ namespace FEVSF
             }
         }
 
+        /// <summary>
+        /// Code taken from the dev-tools editor program by PhantomPilot and edited it a bit to fit my needs.
+        /// </summary>
+        /// <param name="filepath"></param>
+        /// <param name="inlines"></param>
+        public static void transformSEVStoEVS(string filepath, string[] inlines)
+        {
+            var buf = new byte[640];
+            var lines = inlines;
+            int pos = 0;
+
+            int inbase = 16;
+
+            foreach (string line in lines)
+            {
+                if (string.IsNullOrWhiteSpace(line))
+                    continue;
+
+                string[] fields = line.Split(',');
+                for (int i = 0; i < 10; ++i)
+                {
+                    int index = (pos * 20) + (i * 2);
+                    var val = BitConverter.GetBytes(Convert.ToUInt16(fields[i].Trim(), inbase));
+                    buf[index] = val[0];
+                    buf[index + 1] = val[1];
+                }
+                ++pos;
+            }
+            File.WriteAllBytes(filepath, buf);
+        }
+
         /*
          * 1th byte = 0
          * 3rd byte = 1

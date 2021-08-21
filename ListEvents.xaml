@@ -27,19 +27,20 @@
             </Grid.RowDefinitions>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="126*"/>
+                    <ColumnDefinition Width="257*"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Content="Working Direction full Path"
-                        Grid.Column="0"
-                        Foreground="White"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"/>
+                <Label Grid.Column="0"
+                       Foreground="White"
+                       VerticalAlignment="Center"
+                       Grid.ColumnSpan="1">
+                    <TextBlock Text="Working Direction full Path" TextWrapping="Wrap" />
+                </Label>
 
                 <TextBox Name="workingdirpath"
                         Width="Auto"
-                        Margin="10,10,10,10"
+                        Margin="8,10,9.667,10"
                         Padding="5,5,5,5"
                         VerticalScrollBarVisibility="Disabled"
                         Foreground="White"
@@ -87,7 +88,8 @@
                         Foreground="White"
                         BorderBrush="Transparent"
                         Grid.Column="0"
-                        Padding="5,5,5,5">
+                        Padding="5,5,5,5"
+                        FontSize="10">
                     <Button.Background>
                         <SolidColorBrush Color="Black" Opacity="0.5" />
                     </Button.Background>
@@ -103,7 +105,8 @@
                         Foreground="White"
                         BorderBrush="Transparent"
                         Grid.Column="1"
-                        Padding="5,5,5,5">
+                        Padding="5,5,5,5"
+                        FontSize="10">
                     <Button.Background>
                         <SolidColorBrush Color="Black" Opacity="0.5" />
                     </Button.Background>
@@ -119,11 +122,12 @@
                         Foreground="White"
                         BorderBrush="Transparent"
                         Grid.Column="2"
-                        Padding="5,5,5,5">
+                        Padding="5,5,5,5"
+                        FontSize="10">
                     <Button.Background>
                         <SolidColorBrush Color="Black" Opacity="0.5" />
                     </Button.Background>
-                    <TextBlock Text="Transform all events"
+                    <TextBlock Text="Transform all events to .fevs"
                                TextWrapping="Wrap"
                     />
                 </Button>
@@ -135,7 +139,8 @@
                         Foreground="White"
                         BorderBrush="Transparent"
                         Grid.Column="3"
-                        Padding="5,5,5,5">
+                        Padding="5,5,5,5"
+                        FontSize="10">
                     <Button.Background>
                         <SolidColorBrush Color="Black" Opacity="0.5" />
                     </Button.Background>
@@ -143,20 +148,6 @@
                                TextWrapping="Wrap"
                     />
                 </Button>
-            </Grid>
-        </Grid>
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="42*"/>
-                <RowDefinition Height="379*"/>
-            </Grid.RowDefinitions>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                
             </Grid>
         </Grid>
     </Grid>

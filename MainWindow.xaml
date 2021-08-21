@@ -68,6 +68,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <Button x:Name="Save"
@@ -78,7 +79,8 @@
                     Foreground="White"
                     BorderBrush="Transparent"
                     Grid.Column="0"
-                    Padding="5,5,5,5">
+                    Padding="5,5,5,5"
+                    FontSize="10">
                 <Button.Background>
                     <SolidColorBrush Color="Black" Opacity="0.5" />
                 </Button.Background>
@@ -92,7 +94,8 @@
                     Foreground="White"
                     BorderBrush="Transparent"
                     Grid.Column="1"
-                    Padding="5,5,5,5">
+                    Padding="5,5,5,5"
+                    FontSize="10">
                 <Button.Background>
                     <SolidColorBrush Color="Black" Opacity="0.5" />
                 </Button.Background>
@@ -106,7 +109,8 @@
                     Foreground="White"
                     BorderBrush="Transparent"
                     Grid.Column="2"
-                    Padding="5,5,5,5">
+                    Padding="5,5,5,5"
+                    FontSize="10">
                 <Button.Background>
                     <SolidColorBrush Color="Black" Opacity="0.5" />
                 </Button.Background>
@@ -120,11 +124,27 @@
                     Foreground="White"
                     BorderBrush="Transparent"
                     Grid.Column="3"
-                    Padding="5,5,5,5">
+                    Padding="5,5,5,5"
+                    FontSize="10">
                 <Button.Background>
                     <SolidColorBrush Color="Black" Opacity="0.5" />
                 </Button.Background>
                 <TextBlock Text="Save as .sevs" TextWrapping="Wrap" />
+            </Button>
+
+            <Button x:Name="TransformEVS"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Click="TransformEVS_Click"
+                    Foreground="White"
+                    BorderBrush="Transparent"
+                    Grid.Column="4"
+                    Padding="5,5,5,5"
+                    FontSize="10">
+                <Button.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5" />
+                </Button.Background>
+                <TextBlock Text="Save as .evs" TextWrapping="Wrap" />
             </Button>
         </Grid>
     </Grid>

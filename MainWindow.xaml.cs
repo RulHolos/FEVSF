@@ -17,6 +17,8 @@ namespace FEVSF
             documentation.Text = File.ReadAllText("documentation.txt");
             ListEvents subWindow = new ListEvents();
             subWindow.Show();
+            Properties.Settings.Default.WorkMode = "global";
+            Properties.Settings.Default.Save();
 
             this.Closed += new EventHandler(MainWindow_Closed);
         }
@@ -133,11 +135,11 @@ namespace FEVSF
                         try
                         {
                             // Si les args et la commande sont bons, alors on va l'appeler et modifier le finishedCommands[i]
-                            for (int a = 0; a < args.Length; a++)
+                            /*for (int a = 0; a < args.Length; a++)
                             {
                                 Console.Write(args[a].ToString());
                             }
-                            Console.Write("\n");
+                            Console.Write("\n");*/
                             finishedCommands[i] = (int[])magicMethod.Invoke(CommandsObject, args);
                         }
                         catch (NullReferenceException)
@@ -257,6 +259,23 @@ namespace FEVSF
             else
             {
                 Title = "FEVS - " + filename[1];
+            }
+        }
+
+        private void TransformEVS_Click(object sender, RoutedEventArgs e)
+        {
+            string[] filename = Title.Split(new[] { " - " }, StringSplitOptions.None);
+            if (filename.Length != 2)
+            {
+                MessageBox.Show("You don't have any loaded file to save.");
+            }
+            else
+            {
+                Transform_Click(sender, e);
+                string[] newfile = filename[1].Split('.');
+                string[] text = File.ReadAllLines(newfile[0] + ".sevs");
+                File.Delete(newfile[0] + ".sevs");
+                Utils.transformSEVStoEVS(newfile[0] + ".evs", text);
             }
         }
     }
